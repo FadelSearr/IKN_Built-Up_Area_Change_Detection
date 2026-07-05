@@ -4,28 +4,8 @@
 // ==============================================================================
 
 // 1. LOAD BATAS IKN (gunakan yang sama dengan script preprocessing)
-// Batas administrasi IKN yang lebih detail
-var iknBoundary = ee.Geometry.Polygon([
-  [
-    [116.83, -0.75],
-    [116.95, -0.78],
-    [117.05, -0.82],
-    [117.08, -0.88],
-    [117.05, -0.94],
-    [116.98, -0.98],
-    [116.88, -1.00],
-    [116.78, -1.02],
-    [116.68, -1.01],
-    [116.58, -0.98],
-    [116.50, -0.94],
-    [116.48, -0.88],
-    [116.50, -0.82],
-    [116.58, -0.78],
-    [116.68, -0.75],
-    [116.78, -0.73],
-    [116.83, -0.75]
-  ]
-]);
+// Batas administrasi IKN resmi dari Asset
+var iknBoundary = ee.FeatureCollection('projects/gen-lang-client-0127135473/assets/Delineasi_IKN_250K').geometry();
 
 Map.centerObject(iknBoundary, 11);
 Map.addLayer(iknBoundary, {color: 'yellow'}, 'Batas IKN');
