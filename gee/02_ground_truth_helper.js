@@ -35,14 +35,27 @@ var randomPoints = ee.FeatureCollection.randomPoints({
   seed: 12345 // Seed tetap agar hasil konsisten
 });
 
-// Tambahkan properti placeholder (HARUS DIISI MANUAL NANTI)
-randomPoints = randomPoints.map(function(feature) {
+// Tambahkan properti placeholder + ASSIGN YEAR OTOMATIS
+// 150 titik pertama = 2023, 150 titik terakhir = 2025
+var pointsList = randomPoints.toList(300);
+var points2023 = ee.FeatureCollection(pointsList.slice(0, 150)).map(function(feature) {
   return feature.set({
     'class': -1,  // -1 = BELUM DILABELI (isi dengan 0 atau 1 nanti)
-    'year': 2025, // Default 2025, ganti jadi 2023 untuk beberapa titik
+    'year': 2023,
     'id': feature.id()
   });
 });
+
+var points2025 = ee.FeatureCollection(pointsList.slice(150, 300)).map(function(feature) {
+  return feature.set({
+    'class': -1,  // -1 = BELUM DILABELI (isi dengan 0 atau 1 nanti)
+    'year': 2025,
+    'id': feature.id()
+  });
+});
+
+// Gabungkan kembali
+randomPoints = points2023.merge(points2025);
 
 // Visualisasi titik di peta
 Map.addLayer(randomPoints, {color: 'red'}, '300 Titik Sampel', true);
@@ -83,9 +96,11 @@ Export.table.toAsset({
 // 6. Untuk setiap titik, zoom ke lokasinya di citra satelit lalu:
 //    - Jika ada gedung/jalan/infrastruktur: ubah "class": -1 menjadi "class": 1
 //    - Jika hutan/tanah kosong/air: ubah "class": -1 menjadi "class": 0
-// 7. Pastikan 150 titik untuk tahun 2023 dan 150 untuk tahun 2025
-//    (ubah properti "year" sesuai kebutuhan)
-// 8. Upload kembali ke GEE Assets dengan nama "IKN_GroundTruth"
+// 7. ✅ Properti "year" SUDAH OTOMATIS: 150 pertama = 2023, 150 terakhir = 2025
+//    (tidak perlu diubah manual!)
+// 8. Pastikan ada 75 titik class:0 dan 75 titik class:1 untuk SETIAP tahun
+//    (total: 150 target/non-target per tahun)
+// 9. Upload kembali ke GEE Assets dengan nama "IKN_GroundTruth"
 // ==============================================================================
 
 print("PENTING: Titik ini masih memiliki class = -1 (belum dilabeli)!");
