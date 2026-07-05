@@ -1,0 +1,19 @@
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+
+# Node
+node_modules/
+npm-debug.log
+
+# Large data files (optional, tapi disarankan agar repo tidak berat)
+# *.geojson
+*.tif
+*.tiff
