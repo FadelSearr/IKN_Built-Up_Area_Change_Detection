@@ -19,7 +19,7 @@ Actual_1,5,35
 ```json
 {
   "builtup_2023_2024_ha": 1250.5,
-  "builtup_2025_ha": 1580.3,
+  "builtup_2026_ha": 1580.3,
   "gain_ha": 345.8,
   "loss_ha": 16.0,
   "net_change_ha": 329.8,

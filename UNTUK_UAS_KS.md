@@ -10,11 +10,11 @@ Proyek akhir ini merupakan kolaborasi dan integrasi kompetensi dari dua mata kul
 ## 🎯 Konsep Utama Proyek
 
 Tugas kelompok ini bertujuan untuk menjawab pertanyaan: 
-> **"Apakah objek target di kota terpilih mengalami peningkatan (gain) atau penyusutan (loss) antara tahun 2024 dan 2025?"**
+> **"Apakah objek target di kota terpilih mengalami peningkatan (gain) atau penyusutan (loss) antara tahun 2024 dan 2026?"**
 
 ### Prinsip Utama Perbandingan Adil (Fair Comparison)
-*   **Satu Model untuk Dua Tahun**: Model Random Forest yang dilatih harus sama untuk mengklasifikasikan citra tahun 2024 dan 2025. Jika menggunakan model yang berbeda untuk tiap tahun, perbedaan hasil klasifikasi bisa disebabkan oleh perbedaan model/kesalahan klasifikasi, bukan perubahan nyata di lapangan.
-*   **Struktur Fitur Konsisten**: Band spektral dan indeks spektral yang digunakan sebagai input fitur pada tahun 2024 dan 2025 harus persis sama.
+*   **Satu Model untuk Dua Tahun**: Model Random Forest yang dilatih harus sama untuk mengklasifikasikan citra tahun 2024 dan 2026. Jika menggunakan model yang berbeda untuk tiap tahun, perbedaan hasil klasifikasi bisa disebabkan oleh perbedaan model/kesalahan klasifikasi, bukan perubahan nyata di lapangan.
+*   **Struktur Fitur Konsisten**: Band spektral dan indeks spektral yang digunakan sebagai input fitur pada tahun 2024 dan 2026 harus persis sama.
 
 ---
 
@@ -40,19 +40,19 @@ Pilih satu wilayah administratif setingkat kota/kabupaten di negara mana pun dan
     1.  Kota mana yang dipilih?
     2.  Apa objek targetnya?
     3.  Mengapa objek tersebut penting?
-    4.  Mengapa perubahan 2024–2025 di wilayah tersebut perlu dianalisis?
+    4.  Mengapa perubahan 2024–2026 di wilayah tersebut perlu dianalisis?
     5.  Siapa yang dapat menggunakan hasil analisis ini?
 *   **Contoh Rumusan Masalah**:
-    > "Bagaimana perubahan luas vegetasi di Kota Bekasi antara tahun 2024 dan 2025 berdasarkan hasil klasifikasi Random Forest?"
+    > "Bagaimana perubahan luas vegetasi di Kota Bekasi antara tahun 2024 dan 2026 berdasarkan hasil klasifikasi Random Forest?"
 *   **Output Langkah 1**: Nama kota, negara, batas administrasi, objek target, pertanyaan analisis, dan alasan pemilihan. (Bukti: Deskripsi wilayah studi).
 
-#### 2️⃣ LANGKAH 2: Ambil Sentinel-2 Tahun 2024 dan 2025
+#### 2️⃣ LANGKAH 2: Ambil Sentinel-2 Tahun 2024 dan 2026
 Dapatkan data citra satelit Sentinel-2 yang representatif dan adil untuk dibandingkan pada kedua tahun studi.
 
 *   **Sumber Data**: Sentinel-2 Surface Reflectance Harmonized (Koleksi GEE: `COPERNICUS/S2_SR_HARMONIZED`).
 *   **Ketentuan Periode**: Periode waktu komposit pada kedua tahun harus setara/adil untuk menghindari bias musiman.
-    *   *Benar (Setara)*: Januari–Desember 2024 vs. Januari–Desember 2025 atau Juni–September 2024 vs. Juni–September 2025.
-    *   *Salah (Tidak Adil)*: Januari–Maret 2024 vs. Juli–Desember 2025.
+    *   *Benar (Setara)*: Januari–Desember 2024 vs. Januari–Desember 2026 atau Juni–September 2024 vs. Juni–September 2026.
+    *   *Salah (Tidak Adil)*: Januari–Maret 2024 vs. Juli–Desember 2026.
 *   **Proses Preprocessing**:
     1.  Filter berdasarkan batas administrasi kota.
     2.  Filter rentang tanggal sesuai ketentuan.
@@ -60,8 +60,8 @@ Dapatkan data citra satelit Sentinel-2 yang representatif dan adil untuk dibandi
     4.  Lakukan *cloud masking* (menghilangkan awan dan bayangannya menggunakan band QA/SCL atau Cloud Probability).
     5.  Lakukan komposit median (*median composite*) untuk menghasilkan citra bebas awan.
     6.  Potong (*clip*) citra komposit sesuai batas kota.
-*   **Metadata yang Wajib Dicatat**: Nama koleksi data, rentang tanggal 2024 & 2025, metode *cloud masking*, batas maks awan (%), metode komposit, resolusi analisis, dan sumber batas kota.
-*   **Output Langkah 2**: Satu komposit bebas awan tahun 2024 dan satu komposit tahun 2025 yang dipotong ke wilayah kota. (Bukti: Screenshot koleksi citra).
+*   **Metadata yang Wajib Dicatat**: Nama koleksi data, rentang tanggal 2024 & 2026, metode *cloud masking*, batas maks awan (%), metode komposit, resolusi analisis, dan sumber batas kota.
+*   **Output Langkah 2**: Satu komposit bebas awan tahun 2024 dan satu komposit tahun 2026 yang dipotong ke wilayah kota. (Bukti: Screenshot koleksi citra).
 
 #### 3️⃣ LANGKAH 3: Pilih Band dan Indeks Spektral
 Pilih kombinasi band spektral asli dan indeks spektral tambahan yang relevan sebagai fitur masukan (*feature stack*) untuk model Random Forest.
@@ -73,10 +73,10 @@ Pilih kombinasi band spektral asli dan indeks spektral tambahan yang relevan seb
     *   *Area Terbangun*: NDBI, BSI, NDVI
     *   *Lahan Terbuka*: BSI, NDBI, NDVI
     *   *Mangrove*: NDVI, NDMI, MNDWI, indeks mangrove khusus.
-*   **Ketentuan**: Struktur fitur (urutan, jenis band, dan indeks) pada tahun 2024 dan 2025 harus identik dan menggunakan nama yang konsisten.
-*   **Output Langkah 3**: Satu `ee.Image` multiband (feature stack) untuk tahun 2024 dan satu untuk 2025 yang berisi band asli + indeks spektral pilihan. (Bukti: Daftar band & indeks yang digunakan).
+*   **Ketentuan**: Struktur fitur (urutan, jenis band, dan indeks) pada tahun 2024 dan 2026 harus identik dan menggunakan nama yang konsisten.
+*   **Output Langkah 3**: Satu `ee.Image` multiband (feature stack) untuk tahun 2024 dan satu untuk 2026 yang berisi band asli + indeks spektral pilihan. (Bukti: Daftar band & indeks yang digunakan).
 
-#### 4️⃣ LANGKAH 4: Buat Ground Truth Dua Tahun (2024 & 2025)
+#### 4️⃣ LANGKAH 4: Buat Ground Truth Dua Tahun (2024 & 2026)
 Buat titik sampel atau data berlabel sebagai bahan pelatihan dan pengujian model.
 
 *   **Ketentuan Minimum & Distribusi**:
@@ -89,20 +89,20 @@ Buat titik sampel atau data berlabel sebagai bahan pelatihan dan pengujian model
 | Tahun | Kelas 1 (Target) | Kelas 0 (Non-Target) | Total Titik |
 | :--- | :---: | :---: | :---: |
 | **2024** | 75 | 75 | 150 |
-| **2025** | 75 | 75 | 150 |
+| **2026** | 75 | 75 | 150 |
 | **TOTAL** | **150** | **150** | **300** |
 
 *   **Aturan Pengambilan Titik**:
     *   Sebaran titik harus merata di seluruh wilayah kota (mewakili pusat kota, pinggiran, dan berbagai kondisi topografi/lahan).
     *   Titik tidak boleh bertumpuk (*overlapping*) or berdekatan terlalu rapat.
     *   Kelas non-target (0) harus bervariasi. Jika objek target adalah vegetasi, maka non-target harus terdiri dari gabungan perairan, area terbangun, dan lahan terbuka (jangan hanya satu jenis objek).
-    *   Satu lokasi fisik yang sama bisa memiliki label berbeda antar tahun (misal: lahan terbuka di 2024 berubah menjadi area terbangun di 2025).
-*   **Metadata Titik**: Setiap titik wajib memiliki atribut `class` (nilai 0 atau 1) dan `year` (nilai 2024 atau 2025). Simpan dalam satu `FeatureCollection`.
+    *   Satu lokasi fisik yang sama bisa memiliki label berbeda antar tahun (misal: lahan terbuka di 2024 berubah menjadi area terbangun di 2026).
+*   **Metadata Titik**: Setiap titik wajib memiliki atribut `class` (nilai 0 atau 1) dan `year` (nilai 2024 atau 2026). Simpan dalam satu `FeatureCollection`.
 *   **🚫 Larangan Keras**:
     1.  Jangan gunakan hasil klasifikasi lain sebagai ground truth.
     2.  Jangan mengambil semua titik sampel hanya dari satu atau beberapa polygon saja.
     3.  Jangan hanya menandai contoh yang paling mudah/jelas terlihat saja.
-    4.  Jangan menyalin langsung label 2024 ke 2025 tanpa memeriksa citra tahun 2025.
+    4.  Jangan menyalin langsung label 2024 ke 2026 tanpa memeriksa citra tahun 2026.
     5.  Jangan membuat titik yang terlalu rapat/berhimpitan.
 *   **Output Langkah 4**: Satu kumpulan ground truth berlabel (atribut kelas dan tahun) yang siap digunakan. (Bukti: Peta sebaran titik & tabel atribut).
 
@@ -111,7 +111,7 @@ Bagi ground truth menjadi subset data training dan testing secara terprogram (bu
 
 *   **Mekanisme Split (70/30)**:
     *   Bagi data menjadi **70% Training Data** (untuk melatih model) dan **30% Testing Data** (untuk evaluasi).
-    *   Split harus dilakukan untuk setiap kombinasi kelas-tahun secara proporsional agar representasi seimbang (misal: split 70/30 dilakukan pada kelompok 2024-Kelas1, 2024-Kelas0, 2025-Kelas1, dan 2025-Kelas0 baru kemudian digabungkan).
+    *   Split harus dilakukan untuk setiap kombinasi kelas-tahun secara proporsional agar representasi seimbang (misal: split 70/30 dilakukan pada kelompok 2024-Kelas1, 2024-Kelas0, 2026-Kelas1, dan 2026-Kelas0 baru kemudian digabungkan).
     *   Gunakan pembagian otomatis menggunakan kolom nilai acak (*random value*) dengan seed angka yang tetap (*fixed seed*). Seed wajib dicatat agar klasifikasi dapat direproduksi.
 *   **Detail Pembagian (dari minimal 300 titik)**:
     *   **Training Data (70%)**: 210 observasi.
@@ -148,20 +148,20 @@ Uji performa model menggunakan testing data (30%) untuk melihat seberapa baik mo
 *   **Output Langkah 6**: Metrik evaluasi APRF dan analisis keterbatasan model. (Bukti: Confusion matrix & tabel metrik).
 
 #### 7️⃣ LANGKAH 7: Satu Model, Dua Tahun
-Gunakan model Random Forest yang sama (dari Langkah 5) untuk melakukan prediksi klasifikasi pada *feature stack* tahun 2024 dan 2025.
+Gunakan model Random Forest yang sama (dari Langkah 5) untuk melakukan prediksi klasifikasi pada *feature stack* tahun 2024 dan 2026.
 
 *   **Output Langkah 7**:
     *   Raster klasifikasi tahun 2024 (bernilai 0 atau 1).
-    *   Raster klasifikasi tahun 2025 (bernilai 0 atau 1).
-    *   Luas objek target tahun 2024 dan 2025 (dalam hektare).
+    *   Raster klasifikasi tahun 2026 (bernilai 0 atau 1).
+    *   Luas objek target tahun 2024 dan 2026 (dalam hektare).
     *   Persentase luas objek target terhadap total luas kota untuk masing-masing tahun.
 
 #### 8️⃣ LANGKAH 8: Di Mana Objek Bertambah dan Berkurang?
-Lakukan analisis deteksi perubahan (*change detection*) secara spasial dengan membandingkan raster klasifikasi 2024 dan 2025.
+Lakukan analisis deteksi perubahan (*change detection*) secara spasial dengan membandingkan raster klasifikasi 2024 dan 2026.
 
 *   **Matriks Perubahan Kelas**:
 
-| Hasil Klasifikasi 2024 | Hasil Klasifikasi 2025 | Kategori Perubahan | Nilai Piksel Baru |
+| Hasil Klasifikasi 2024 | Hasil Klasifikasi 2026 | Kategori Perubahan | Nilai Piksel Baru |
 | :---: | :---: | :--- | :---: |
 | 1 | 1 | **Tetap Target (Stable Target)** | 1 |
 | 0 | 0 | **Tetap Non-Target (Stable Non-Target)** | 0 |
@@ -180,7 +180,7 @@ Lakukan analisis deteksi perubahan (*change detection*) secara spasial dengan me
 *   **Perhitungan Luas & Persentase Perubahan**:
     *   Hitung luas total area bertambah (*Gain*) dan berkurang (*Loss*).
     *   Hitung perubahan bersih (*Net Change*):
-        $$\text{Net Change} = \text{Luas 2025} - \text{Luas 2024}$$
+        $$\text{Net Change} = \text{Luas 2026} - \text{Luas 2024}$$
     *   Hitung persentase perubahan bersih terhadap kondisi awal (2024):
         $$\text{Persentase Perubahan} = \frac{\text{Net Change}}{\text{Luas 2024}} \times 100\%$$
 *   **Output Langkah 8**: GeoJSON polygon perubahan (*Gain* dan *Loss*) serta statistik luas perubahan. (Bukti: Peta perubahan dan angka luasan).
@@ -191,8 +191,8 @@ Bangun aplikasi WebGIS interaktif yang memiliki struktur navigasi 4 tab wajib un
 *   **Ketentuan Platform**: Bebas menggunakan Google Earth Engine (GEE) App, Leaflet, MapLibre GL JS, Streamlit, geemap, atau platform pemetaan web interaktif lainnya.
 *   **Struktur WebGIS Wajib (4 Tab)**:
     1.  **Tab 1: Peta Hasil (Map)**
-        *   Menampilkan peta interaktif berisi batas kota, sebaran objek target 2024, sebaran objek target 2025, serta peta perubahan (*Gain* & *Loss*).
-        *   Wajib dilengkapi dengan Legend, Layer Control (untuk menyalakan/mematikan layer), Opacity Control, Ringkasan Statistik Luas (2024, 2025, Net Change, Persentase), dan Popup Informasi ketika polygon diklik.
+        *   Menampilkan peta interaktif berisi batas kota, sebaran objek target 2024, sebaran objek target 2026, serta peta perubahan (*Gain* & *Loss*).
+        *   Wajib dilengkapi dengan Legend, Layer Control (untuk menyalakan/mematikan layer), Opacity Control, Ringkasan Statistik Luas (2024, 2026, Net Change, Persentase), dan Popup Informasi ketika polygon diklik.
     2.  **Tab 2: Data & Proses (Data & Process)**
         *   Menyajikan transparansi metodologi: Sumber citra Sentinel-2 (`S2_SR_HARMONIZED`), periode komposit, teknik *cloud masking*, detail ground truth (total titik, sebaran, rasio training-testing 70/30), diagram alur kerja, dan parameter model Random Forest (100 trees).
     3.  **Tab 3: Evaluasi Model (Model Evaluation)**
@@ -284,8 +284,8 @@ Sebelum melakukan submit pekerjaan UAS, centang checklist berikut untuk memastik
 
 - [ ] **Kota Studi**: Dipastikan tidak sama dengan wilayah studi kelompok lain di kelas.
 - [ ] **Objek Target**: Telah disetujui oleh dosen (khusus untuk objek non-standar).
-- [ ] **Rentang Citra**: Periode bulan/tanggal komposit tahun 2024 dan 2025 sudah setara/konsisten.
-- [ ] **Band & Indeks**: Band asli dan indeks spektral masukan yang digunakan pada tahun 2024 dan 2025 persis sama.
+- [ ] **Rentang Citra**: Periode bulan/tanggal komposit tahun 2024 dan 2026 sudah setara/konsisten.
+- [ ] **Band & Indeks**: Band asli dan indeks spektral masukan yang digunakan pada tahun 2024 dan 2026 persis sama.
 - [ ] **Ground Truth Minimum**: Jumlah total titik ground truth minimal 300 titik (150 per tahun).
 - [ ] **Keseimbangan Kelas**: Titik ground truth terbagi seimbang (150 titik target, 150 titik non-target).
 - [ ] **Training-Testing Split**: Data training (70%) dan testing (30%) dipisah secara otomatis menggunakan kode, bukan dipilih manual.

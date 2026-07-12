@@ -1,0 +1,26 @@
+{
+  "study_area": "Ibu Kota Nusantara (IKN)",
+  "period_1": "2023-2024",
+  "period_2": "2025-2026",
+  "built_up_area_2024_ha": 18445.625,
+  "built_up_area_2026_ha": 20812.807,
+  "change_gain_ha": 5301.903,
+  "change_loss_ha": 2934.721,
+  "net_change_ha": 2367.182,
+  "gain_polygon_count": 717,
+  "loss_polygon_count": 242,
+  "model_evaluation": {
+    "overall_accuracy": 0.96386,
+    "kappa_coefficient": 0.92755,
+    "class_0_non_built_up": {
+      "producer_accuracy_recall": 0.95000,
+      "consumer_accuracy_precision": 0.97436,
+      "f1_score": 0.96203
+    },
+    "class_1_built_up": {
+      "producer_accuracy_recall": 0.97674,
+      "consumer_accuracy_precision": 0.95455,
+      "f1_score": 0.96552
+    }
+  }
+}

@@ -15,7 +15,7 @@ Folder ini berisi laporan akhir dan slide presentasi.
 ### 2. Study Area & Data (1 halaman)
 - Deskripsi wilayah IKN
 - Spesifikasi Sentinel-2 SR Harmonized
-- Periode temporal (2023/2024 vs 2025)
+- Periode temporal (2023/2024 vs 2026)
 
 ### 3. Methodology (2 halaman)
 - Preprocessing workflow (cloud masking, median composite)
@@ -27,7 +27,7 @@ Folder ini berisi laporan akhir dan slide presentasi.
 ### 4. Results (2 halaman)
 - Classification accuracy (APRF metrics)
 - Confusion matrix
-- Peta klasifikasi (2023/24 & 2025)
+- Peta klasifikasi (2023/24 & 2026)
 - Peta change detection (Gain/Loss)
 - Statistik area (tabel & grafik)
 
@@ -61,7 +61,7 @@ Folder ini berisi laporan akhir dan slide presentasi.
 5. **Ground Truth Collection** - Foto contoh digitasi
 6. **Model Training & Evaluation** - APRF metrics
 7. **Classification Results 2023/24** - Peta
-8. **Classification Results 2025** - Peta
+8. **Classification Results 2026** - Peta
 9. **Change Detection Map** - Gain/Loss visualization
 10. **Area Statistics** - Tabel/grafik perubahan
 11. **WebGIS Demo** - Screenshot + link live
